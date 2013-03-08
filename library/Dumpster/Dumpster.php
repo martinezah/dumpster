@@ -9,6 +9,7 @@ class Dumpster
 
         try {
             if (empty($data)) throw new Exception("No data!");
+            $data = json_encode($data);
 
             $url = $config->getConfig('dumpster.url');
             if (!$url) throw new Exception("Required setting 'dumpster.url' not found.");
