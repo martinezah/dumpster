@@ -33,6 +33,8 @@ class App_Model_Db {
 
     public function tags($prefix = '', $limit = 10)
     {
+        $result = $this->db->fetchAll('SELECT tag FROM tag WHERE tag LIKE ?', $prefix . '%');
+        return is_array($result) ? $result : array();
     }
 
     protected function _add_tag($tag)

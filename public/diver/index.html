@@ -7,11 +7,17 @@
 </head>
 <body>
     <div id="dumpster" ng-app="Dumpster" ng-controller="DumpsterCtrl" class="ng-cloak">
-        <a ng-click="togglePubkey()">Public Key</a>
-        <pre ng-show="showPubkey">{{pubkey}}</pre>
-        <br>
-        <a ng-click="testStore()">Store</a>
-        <pre>{{status}}</pre>
+        <label>Tags:</label><input type="text" ng-model="tagFilter" ng-change="searchTags()"></input>
+        <div>
+            <span ng-repeat="tag in filteredTags">
+                <a ng-click="selectTag(tag.tag)">{{tag.tag}}</a> 
+            </span>
+        </div>
+        <div>
+            <span ng-repeat="tag in selectedTags">
+                <a ng-click="deselectTag(tag)">{{tag}}</a> 
+            </span>
+        </div>
     </div>
     <script src="js/jquery.min.js"></script>
     <script src="js/angular.min.js"></script>

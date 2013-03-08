@@ -26,6 +26,13 @@ class IndexController extends Zend_Controller_Action
         $this->getResponse()->setHeader('Content-Type', 'application/json; charset=utf-8');
         if (@$data['action'] == 'pubkey') $this->_pubkey();
         if (@$data['action'] == 'dump') $this->_dump($data);
+        if (@$data['action'] == 'tags') $this->_tags($data);
+    }
+
+    protected function _tags($data) 
+    {
+        $db = new App_Model_Db();
+        $this->view->data['tags'] = $db->tags(@$data['prefix']);
     }
 
     protected function _dump($data) 
