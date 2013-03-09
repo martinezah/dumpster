@@ -3,24 +3,20 @@
 <head>
     <meta charset="utf-8">
     <title>Dumpster Diver</title>
+    <link href="lib/chosen/chosen.css" rel="stylesheet" type="text/css">
     <link href="css/app.css" rel="stylesheet" type="text/css">
 </head>
 <body>
     <div id="dumpster" ng-app="Dumpster" ng-controller="DumpsterCtrl" class="ng-cloak">
-        <label>Tags:</label><input type="text" ng-model="tagFilter" ng-change="searchTags()"></input>
         <div>
-            <span ng-repeat="tag in filteredTags">
-                <a ng-click="selectTag(tag.tag)">{{tag.tag}}</a> 
-            </span>
+            <select id="tags" data-placeholder="Tags" multiple chosen ng-model="selectedTags" ng-options="tag.tag for tag in tags"></select><br>
+            <button ng-click="find()">Find</button>
         </div>
-        <div>
-            <span ng-repeat="tag in selectedTags">
-                <a ng-click="deselectTag(tag)">{{tag}}</a> 
-            </span>
-        </div>
+        <pre ng-repeat="dump in dumps">{{dump}}</pre>
     </div>
-    <script src="js/jquery.min.js"></script>
-    <script src="js/angular.min.js"></script>
+    <script src="lib/jquery.min.js"></script>
+    <script src="lib/angular.min.js"></script>
+    <script src="lib/chosen/chosen.jquery.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>
