@@ -9,7 +9,7 @@
 <body>
     <div id="dumpster" ng-app="Dumpster" ng-controller="DumpsterCtrl" class="ng-cloak">
         <div>
-            <select id="tags" data-placeholder="Tags" multiple chosen ng-model="selectedTags" ng-options="tag.tag for tag in tags"></select><br>
+            <select id="tags" data-placeholder="Tags" multiple chosen ng-model="selectedTags" ng-options="tag for tag in tags"></select><br>
             <button ng-click="find()">Find</button>
         </div>
         <pre ng-repeat="dump in dumps">{{dump}}</pre>

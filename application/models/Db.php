@@ -43,26 +43,32 @@ class App_Model_Db {
             $tagIds[] = $_ids;
 
         }
-        $ids = call_user_func_array('array_intersect', $tagIds);
-        $ids = implode(", ", $ids);
-        $sql = "SELECT * FROM dump WHERE id IN ({$ids})";
+        $ids = count($tagIds) > 1 ? call_user_func_array('array_intersect', $tagIds) : array_shift($tagIds);
+        $ids = is_array($ids) ? implode(", ", $ids) : false;
         $dumps = array();
-        $result = $this->db->fetchAll($sql);
-        if (is_array($result))
-            foreach ($result as $row) {
-                $row["data"] = json_decode($row["data"]);
-                $row["tags"] = json_decode($row["tags"]);
-                $dumps[] = $row;
+        if ($ids) {
+            $sql = "SELECT * FROM dump WHERE id IN ({$ids})";
+            $result = $this->db->fetchAll($sql);
+            if (is_array($result))
+                foreach ($result as $row) {
+                    $row["data"] = json_decode($row["data"]);
+                    $row["tags"] = json_decode($row["tags"]);
+                    $dumps[] = $row;
             }
+        }
         return $dumps;
 
     }
 
     public function tags($prefix = '', $limit = 0)
     {
+        $tags = array();
         $limitPhrase = (int) $limit ? ' LIMIT ' . (int) $limit : '';
         $result = $this->db->fetchAll("SELECT tag FROM tag WHERE tag LIKE ? {$limitPhrase}", $prefix . '%');
-        return is_array($result) ? $result : array();
+        if (is_array($result))
+            foreach ($result as $row)
+                $tags[] = $row["tag"];
+        return $tags;
     }
 
     protected function _add_tag($tag)
