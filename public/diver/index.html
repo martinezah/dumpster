@@ -19,7 +19,10 @@
         </tr>
         <tr ng-repeat="dump in dumps | orderBy:'-id'">
             <td class="when">{{dump.stamp}}</td>
-            <td class="what"><a class="exp" ng-click="expand($event, dump)">{{dump.data | json | truncate:50}}</a></td>
+            <td class="what"><a class="exp" ng-click="dump.exp = !dump.exp">
+                <span ng-hide="dump.exp">{{dump.data | json | truncate:50}}</span>
+                <pre ng-show="dump.exp">{{dump.data | json }}</pre>
+            </a></td>
         </tr>
         </table>
     </div>
