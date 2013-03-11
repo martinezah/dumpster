@@ -3,10 +3,12 @@ var dumpster = angular.module('Dumpster', ['DumpsterFilters']);
 function DumpsterCtrl($scope, $http) {
     
     //handlers and helpers
-    $scope.tags = function() { $http.post('/', {action:'tags'}).success( function(data) { if (data && data.tags) $scope.tags = data.tags;}); };
+    $scope.tags = function() { $scope.status = "Loading tags..."; $http.post('/', {action:'tags'}).success( function(data) { $scope.status = null; if (data && data.tags) $scope.tags = data.tags;}).error(function() { $scope.status = "Something's gone wrong; maybe reload the page?"; }); };
     $scope.find = function() {
+        $scope.dumps = null;
+        $scope.status = "Searching...";
         var tags = $('#tags option:selected').map(function(){ return this.text }).get();
-        $http.post('/', {action: 'find', tags: tags}).success( function(data) { if (data && data.dumps) $scope.dumps = data.dumps;}); 
+        $http.post('/', {action: 'find', tags: tags}).success( function(data) { $scope.status = null; if (data) if (data.dumps) { $scope.dumps = data.dumps; if (!data.dumps.length) $scope.status = "No results.";}}).error(function() { $scope.status = "Something's gone wrong; maybe reload the page?"; }); 
     };
 
     //initialization

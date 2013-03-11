@@ -12,12 +12,13 @@
             <select id="tags" data-placeholder="Tags" multiple chosen ng-model="selectedTags" ng-options="tag for tag in tags"></select><br>
             <button ng-click="find()">Find</button>
         </div>
+        <p>{{status}}</p>
         <table ng-show="dumps.length">
         <tr>
             <th>Timestamp</th>
             <th>Data</th>
         </tr>
-        <tr ng-repeat="dump in dumps | orderBy:'-id'">
+        <tr ng-repeat="dump in dumps | orderBy:'-stamp'">
             <td class="when">{{dump.stamp}}</td>
             <td class="what"><a class="exp" ng-click="dump.exp = !dump.exp">
                 <span ng-hide="dump.exp">{{dump.data | json | truncate:50}}</span>

@@ -4,3 +4,4 @@ table { font-family: monospace; border-spacing: 10px; color: #333; }
 th { text-align: left; }
 a.exp { text-decoration: none; color: #333; }
 pre { margin: 0; width: 720px; }
+p { font-family: monospace; color: #333; }
